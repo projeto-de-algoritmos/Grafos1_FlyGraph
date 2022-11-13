@@ -1,5 +1,6 @@
 from pandas import *
 from graphs import *
+from utils import *
 
 
 if __name__ == "__main__":
@@ -28,3 +29,5 @@ if fp is not None:
     for person in fp:
         names.append(person.id)
 print("Não há caminho" if fp is None else names)
+
+pprint(fp)

@@ -3,6 +3,13 @@ class No:
 		self.__id = id
 		self.__la = list(la)
 
+	def jsonable(self):
+		return self.__dict__
+
+	def ComplexHandler(Obj):
+		if hasattr(Obj, 'jsonable'):
+			return Obj.jsonable()
+
 	def appendEdge(self, node):
 		self.__la.append(node)
 

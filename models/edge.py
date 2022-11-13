@@ -3,6 +3,13 @@ class Aresta:
 		self.__i = i 
 		self.__f = f
 		self.__used = used
+	
+	def jsonable(self):
+		return self.__dict__
+
+	def ComplexHandler(Obj):
+		if hasattr(Obj, 'jsonable'):
+			return Obj.jsonable()
 
 	@property
 	def used(self):
