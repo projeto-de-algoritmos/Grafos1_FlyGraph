@@ -58,6 +58,7 @@ def bfs(nodesList, source, end):
                 for v in u.la:
                     if not visited[v.f]:
                         parent[v.f] = u.id
+                        v.used=True
                         visited[v.f] = True
                         n = next((x for x in nodesList if x.id == v.f), None)
                         queue.put(n)
