@@ -9,17 +9,17 @@ from edge import Aresta
 from node import No
 
 def criaNos(nodesList, nodes):
-	for i in nodes["nós"]:
-		node = No(id=nodes["nós"][i])
+	for i in nodes["OACI"]:
+		node = No(id=nodes["OACI"][i], name=nodes["Nome"][i])
 		nodesList.append(node)
 
 def criaArestas(nodesList, edges):
-	for i in edges["nó início"]:
-		iN = edges["nó início"][i]
-		fN = edges["nó fim"][i]
+	for i in edges["ORIGEM"]:
+		iN = edges["ORIGEM"][i]
+		fN = edges["DESTINO"][i]
 		edge = Aresta(i=iN, f=fN)
 		for node in nodesList:
-			if edges["nó início"][i] == node.id:
+			if edges["ORIGEM"][i] == node.id:
 				node.appendEdge(edge)
 				break
 

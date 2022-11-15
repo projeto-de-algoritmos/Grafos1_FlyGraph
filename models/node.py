@@ -1,7 +1,8 @@
 class No:
-	def __init__(self, id, la = []):
+	def __init__(self, id, la = [], name = ''):
 		self.__id = id
 		self.__la = list(la)
+		self.__name = name
 
 	def jsonable(self):
 		return self.__dict__
@@ -20,6 +21,10 @@ class No:
 	@property 
 	def la(self):
 		return list(self.__la)
+
+	@property 
+	def name(self):
+		return self.__name
 
 	@la.setter
 	def la(self, la):
