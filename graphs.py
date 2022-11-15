@@ -1,68 +1,79 @@
 import sys
 import copy
 import networkx as nx
+from queue import Queue
 import matplotlib.pyplot as plt
 
 sys.path.insert(0, "models")
 sys.path.insert(0, "data")
 
-from queue import Queue
-from edge import Aresta
-from node import No
+from flight import Flight
+from airport import Airport
 
-def criaNos(nodesList, nodes):
-	for i in nodes["OACI"]:
-		node = No(id=nodes["OACI"][i], name=nodes["Nome"][i])
-		nodesList.append(node)
+def createAirports(nodesList, nodes):
+    for i in nodes["OACI"]:
+        airport = Airport(
+            oaci=nodes["OACI"][i],
+            state=nodes["UF"][i],
+            operation=nodes["Operacao"][i],
+            latitude=nodes["Latitude"][i],
+            longitude=nodes["Longitude"][i],
+            altitude=nodes["Altitude"][i],
+            name=nodes["Nome"][i],
+            town=nodes["Municipio_Atendido"][i],
+            flights=[]
+        )
+        nodesList.append(airport)
 
-def criaArestas(nodesList, edges):
-	for i in edges["ORIGEM"]:
-		iN = edges["ORIGEM"][i]
-		fN = edges["DESTINO"][i]
-		edge = Aresta(i=iN, f=fN)
-		for node in nodesList:
-			if edges["ORIGEM"][i] == node.id:
-				node.appendEdge(edge)
-				break
 
-def imprimeGrafo(nodesList):
-	for node in nodesList:
-		edgeList = ''
-		for edge in node.la:
-			edgeList = edgeList + edge.f + ' '
-		print(f"Nó({node.id}) -> LA: [ {edgeList}]")
+def createFlights(nodesList, edges):
+    for i in edges["ORIGEM"]:
+        flight = Flight(
+            origin=edges["ORIGEM"][i],
+            destination=edges["DESTINO"][i],
+            price=edges["TARIFA"][i],
+            seats=edges["ASSENTOS"][i],
+            used=False
+        )
+        for node in nodesList:
+            if edges["ORIGEM"][i] == node.oaci:
+                node.appendEdge(flight)
+                break
 
+def printGraph(nodesList):
+    for node in nodesList:
+        edgeList = ''
+        for edge in node.flights:
+            edgeList = edgeList + edge.destination + ' '
+        print(f"Nó({node.oaci}) -> LA: [ {edgeList}]")
 
 def bfs(nodesList, source, end):
+    queue = Queue()
     visited = {}
     parent = {}
     nodes = {}
-    queue = Queue()
 
     for node in nodesList:
-        visited[node.id] = False
-        parent[node.id] = None
-        nodes[node.id] = node
+        visited[node.oaci] = False
+        parent[node.oaci] = None
+        nodes[node.oaci] = node
 
-    # print(visited)
-    # print(parent)
-    # print(nodes)
-
-    visited[source]= True
-    n = next((x for x in nodesList if x.id == source), None)
+    visited[source] = True
+    n = next((n for n in nodesList if n.oaci == source), None)
     queue.put(n)
 
     for node in nodesList:
-        if not visited[node.id]:           
-            
+        if not visited[node.oaci]:
+
             while not queue.empty():
                 u = queue.get()
-                for v in u.la:
-                    if not visited[v.f]:
-                        parent[v.f] = u.id
-                        v.used=True
-                        visited[v.f] = True
-                        n = next((x for x in nodesList if x.id == v.f), None)
+                for v in u.flights:
+                    if not visited[v.destination]:
+                        parent[v.destination] = u.oaci
+                        v.used = True
+                        visited[v.destination] = True
+                        n = next(
+                            (x for x in nodesList if x.oaci == v.destination), None)
                         queue.put(n)
 
     path = []
@@ -75,9 +86,9 @@ def bfs(nodesList, source, end):
 
 def plotGraph(nodesList):
     G = nx.Graph()
-    G.add_node(node.id for node in nodesList)
+    G.add_node(node.oaci for node in nodesList)
     for node in nodesList:
-        for edge in node.la:
-            G.add_edge(edge.i, edge.f)
+        for edge in node.flights:
+            G.add_edge(edge.origin, edge.destination)
     nx.draw_networkx(G)
     plt.show()
