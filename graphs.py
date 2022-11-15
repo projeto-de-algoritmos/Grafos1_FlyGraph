@@ -1,5 +1,7 @@
 import sys
 import copy
+import networkx as nx
+import matplotlib.pyplot as plt
 
 sys.path.insert(0, "models")
 sys.path.insert(0, "data")
@@ -70,3 +72,12 @@ def bfs(nodesList, source, end):
             end = parent[end]
         path.reverse()
         return path
+
+def plotGraph(nodesList):
+    G = nx.Graph()
+    G.add_node(node.id for node in nodesList)
+    for node in nodesList:
+        for edge in node.la:
+            G.add_edge(edge.i, edge.f)
+    nx.draw_networkx(G)
+    plt.show()

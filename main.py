@@ -36,6 +36,7 @@ if __name__ == "__main__":
     criaNos(nodesList=nodesList, nodes=nodes)
     criaArestas(nodesList=nodesList, edges=edges)
     # imprimeGrafo(nodesList=nodesList)
+    plotGraph(nodesList)
 
     clear()
     for i in range(len(nodesList)):
@@ -54,3 +55,5 @@ if __name__ == "__main__":
     print("Não há caminho" if fp is None else names)
 
     # pprint(fp)
+
+
