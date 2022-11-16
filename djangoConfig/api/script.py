@@ -21,12 +21,13 @@ def bfsExecute(origin,destination):
     i = 0
     totalPrice = 0
     for airport in finalPath:
-        for flight in airport.flights:
-            if flight.used == True and flight.origin == finalPath[i].oaci and flight.destination == finalPath[i+1].oaci:
-                print(f".........................................................................\nPASSO {i+1} .............. Voo DE({flight.origin} - {finalPath[i].name}) => PARA({flight.destination} - {finalPath[i+1].name}) \n.....................: {flight.seats} Assentos disponíveis | Preço: R${flight.price}\n.........................................................................\n")
-                i += 1
-                totalPrice += flight.price
-                break
+        if i != len(finalPath)-1:
+            for flight in airport.flights:
+                if flight.used == True and flight.origin == finalPath[i].oaci and flight.destination == finalPath[i+1].oaci:
+                    print(f".........................................................................\nPASSO {i+1} .............. Voo DE({flight.origin} - {finalPath[i].name}) => PARA({flight.destination} - {finalPath[i+1].name}) \n.....................: {flight.seats} Assentos disponíveis | Preço: R${flight.price}\n.........................................................................\n")
+                    i += 1
+                    totalPrice += flight.price
+                    break
     print(f"PREÇO TOTAL DA VIAGEM: R${totalPrice}")
 
     person= {"name": "Joao", "age:": 21222}
