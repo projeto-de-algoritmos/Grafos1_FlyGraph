@@ -1,5 +1,7 @@
 import json
-from graphs import *
+
+from .models.flight import Flight
+from .graphs import *
 
 def jsonalize(object):
 	parsed = json.dumps(object, indent=2, default=Flight.ComplexHandler)

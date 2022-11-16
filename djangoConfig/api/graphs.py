@@ -2,13 +2,16 @@ import sys
 import copy
 import networkx as nx
 from queue import Queue
+from .models.flight import Flight
+from .models.airport import Airport
+
 import matplotlib.pyplot as plt
 
 sys.path.insert(0, "models")
 sys.path.insert(0, "data")
 
-from flight import Flight
-from airport import Airport
+
+
 
 def createAirports(nodesList, nodes):
     for i in nodes["OACI"]:
