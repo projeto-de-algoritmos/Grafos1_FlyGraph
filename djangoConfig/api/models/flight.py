@@ -17,6 +17,11 @@ class Flight:
     def ComplexHandler(Obj):
         if hasattr(Obj, 'jsonable'):
             return Obj.jsonable()
+    
+    def to_dict(self):
+        return{
+            "origin": self.origin, "destination": self.destination, "price": self.price, "seats":self.seats, "used": self.used
+        }
 
     @property
     def origin(self):
