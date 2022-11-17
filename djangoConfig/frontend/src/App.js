@@ -32,7 +32,7 @@ function App() {
           soma();
           return (
             <div>
-              <p>Vôo {i}</p>
+              <p>Voo {i}</p>
               Origem: {data.origin.town}
               <br />
               Destino: {data.destination.town}
