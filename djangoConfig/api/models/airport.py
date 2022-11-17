@@ -20,7 +20,7 @@ class Airport:
         self.__flights = flights
 
     def jsonable(self):
-        return self.__dict__
+        return self.to_dict()
 
     def ComplexHandler(Obj):
         if hasattr(Obj, 'jsonable'):
@@ -28,6 +28,18 @@ class Airport:
 
     def appendEdge(self, node):
         self.__flights.append(node)
+
+    def to_dict(self):
+        return{
+            "oaci": self.oaci,
+            "state": self.state,
+            "operation": self.operation,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "altitude": self.altitude,
+            "name": self.name,
+            "town": self.town
+        }
 
     @property
     def oaci(self):

@@ -10,9 +10,6 @@ import matplotlib.pyplot as plt
 sys.path.insert(0, "models")
 sys.path.insert(0, "data")
 
-
-
-
 def createAirports(nodesList, nodes):
     for i in nodes["OACI"]:
         airport = Airport(
@@ -30,10 +27,13 @@ def createAirports(nodesList, nodes):
 
 
 def createFlights(nodesList, edges):
+    airportNodes = {}
+    for airport in nodesList:
+        airportNodes[airport.oaci] = airport
     for i in edges["ORIGEM"]:
         flight = Flight(
-            origin=edges["ORIGEM"][i],
-            destination=edges["DESTINO"][i],
+            origin=airportNodes[edges["ORIGEM"][i]],
+            destination=airportNodes[edges["DESTINO"][i]],
             price=edges["TARIFA"][i],
             seats=edges["ASSENTOS"][i],
             used=False
@@ -47,7 +47,7 @@ def printGraph(nodesList):
     for node in nodesList:
         edgeList = ''
         for edge in node.flights:
-            edgeList = edgeList + edge.destination + ' '
+            edgeList = edgeList + edge.destination.oaci + ' '
         print(f"Nó({node.oaci}) -> LA: [ {edgeList}]")
 
 def bfs(nodesList, source, end):
@@ -71,12 +71,12 @@ def bfs(nodesList, source, end):
             while not queue.empty():
                 u = queue.get()
                 for v in u.flights:
-                    if not visited[v.destination]:
-                        parent[v.destination] = u.oaci
+                    if not visited[v.destination.oaci]:
+                        parent[v.destination.oaci] = u.oaci
                         v.used = True
-                        visited[v.destination] = True
+                        visited[v.destination.oaci] = True
                         n = next(
-                            (x for x in nodesList if x.oaci == v.destination), None)
+                            (x for x in nodesList if x.oaci == v.destination.oaci), None)
                         queue.put(n)
 
     path = []

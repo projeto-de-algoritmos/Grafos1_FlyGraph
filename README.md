@@ -36,7 +36,8 @@ Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 
 ```
 pip3 install -r requirements.txt
-python3 main.py
+cd djangoConfig
+python3 manage.py runserver
 ```
 
 ## Uso 

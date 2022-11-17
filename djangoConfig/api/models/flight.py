@@ -1,3 +1,6 @@
+import json
+from .airport import Airport
+
 class Flight:
     def __init__(self,
                  origin,
@@ -12,7 +15,7 @@ class Flight:
         self.__used = used
 
     def jsonable(self):
-        return self.__dict__
+        return self.to_dict()
 
     def ComplexHandler(Obj):
         if hasattr(Obj, 'jsonable'):
@@ -20,7 +23,11 @@ class Flight:
     
     def to_dict(self):
         return{
-            "origin": self.origin, "destination": self.destination, "price": self.price, "seats":self.seats, "used": self.used
+            "origin": json.loads(json.dumps(self.origin, default=Airport.ComplexHandler)), 
+            "destination": json.loads(json.dumps(self.destination, default=Airport.ComplexHandler)), 
+            "price": self.price, 
+            "seats":self.seats, 
+            "used": self.used
         }
 
     @property

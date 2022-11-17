@@ -8,11 +8,11 @@ import asyncio
 @api_view(['GET'])
 def getData(request):
     
-    origin= int(request.query_params['ido'])
-    destination= int(request.query_params['idd'])
-    result= script.bfsExecute(origin,destination)
+    origin = int(request.query_params['ido'])
+    destination = int(request.query_params['idd'])
+    result = script.bfsExecute(origin,destination)
     response = result.to_dict()
-    print(response)
+    # print(response)
 
     return Response(response)
    

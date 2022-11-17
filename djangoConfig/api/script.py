@@ -27,13 +27,14 @@ def bfsExecute(origin,destination):
     for airport in finalPath:
         if i != len(finalPath)-1:
             for flight in airport.flights:
-                if flight.used == True and flight.origin == finalPath[i].oaci and flight.destination == finalPath[i+1].oaci:
+                if (flight.used == True 
+                        and flight.origin.oaci == finalPath[i].oaci 
+                        and flight.destination.oaci == finalPath[i+1].oaci):
                     totalFlights.append(flight)
                     i += 1
                     totalPrice += flight.price
                     break
     result = Response(total_price= totalPrice,num_arestas=i, flights= totalFlights)
-
     
     return result
    

@@ -17,6 +17,7 @@ if __name__ == "__main__":
 
     createAirports(nodesList=nodesList, nodes=nodes)
     createFlights(nodesList=nodesList, edges=edges)
+    printGraph(nodesList)
 
     clear()
     for i in range(len(nodesList)):
@@ -39,8 +40,8 @@ if __name__ == "__main__":
     for airport in finalPath:
         for flight in airport.flights:
             if i != len(finalPath)-1:
-                if flight.used == True and flight.origin == finalPath[i].oaci and flight.destination == finalPath[i+1].oaci:
-                    print(f".........................................................................\nPASSO {i+1} .............. Voo DE({flight.origin} - {finalPath[i].name}) => PARA({flight.destination} - {finalPath[i+1].name}) \n.....................: {flight.seats} Assentos disponíveis | Preço: R${flight.price}\n.........................................................................\n")
+                if flight.used == True and flight.origin.oaci == finalPath[i].oaci and flight.destination.oaci == finalPath[i+1].oaci:
+                    print(f".........................................................................\nPASSO {i+1} .............. Voo DE({flight.origin.oaci} - {finalPath[i].name}) => PARA({flight.destination.oaci} - {finalPath[i+1].name}) \n.....................: {flight.seats} Assentos disponíveis | Preço: R${flight.price}\n.........................................................................\n")
                     i += 1
                     totalPrice += flight.price
                     break
