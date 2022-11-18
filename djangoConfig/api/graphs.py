@@ -1,5 +1,6 @@
 import sys
 import copy
+from unittest import result
 import networkx as nx
 from queue import Queue
 from .models.flight import Flight
@@ -9,6 +10,7 @@ import matplotlib.pyplot as plt
 
 sys.path.insert(0, "models")
 sys.path.insert(0, "data")
+
 
 def createAirports(nodesList, nodes):
     for i in nodes["OACI"]:
@@ -43,12 +45,22 @@ def createFlights(nodesList, edges):
                 node.appendEdge(flight)
                 break
 
+
 def printGraph(nodesList):
     for node in nodesList:
         edgeList = ''
         for edge in node.flights:
             edgeList = edgeList + edge.destination.oaci + ' '
         print(f"Nó({node.oaci}) -> LA: [ {edgeList}]")
+
+
+def returnAirports(nodeList):
+    result = []
+    for node in nodeList:
+        result.append(node.to_dict())
+    print(len(result))
+    return result
+
 
 def bfs(nodesList, source, end):
     queue = Queue()
@@ -86,6 +98,7 @@ def bfs(nodesList, source, end):
             end = parent[end]
         path.reverse()
         return path
+
 
 def plotGraph(nodesList):
     G = nx.Graph()
