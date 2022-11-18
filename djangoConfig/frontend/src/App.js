@@ -4,6 +4,10 @@ import api from "./services/api";
 
 function App() {
   const [flight, setFlights] = useState([]);
+  const [airport, setAirports] = useState([]);
+  const [origin, setOrigin] = useState([]);
+  const [destination, setDestination] = useState([]);
+
   const [totalPrice, setTotalPrice] = useState("");
 
   const getFligths = async (ido, idd) => {
@@ -16,13 +20,28 @@ function App() {
     }
   };
 
+  const getAirports = async () => {
+    try {
+      const _airport = await api.get("/airports");
+      setAirports(_airport.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   let i = 0;
+  let idd = 0;
+  let ido = 0;
   function soma() {
     i++;
   }
 
   useEffect(() => {
-    getFligths(5, 9);
+    getFligths(origin, destination);
+  }, []);
+
+  useEffect(() => {
+    getAirports();
   }, []);
 
   return (
@@ -42,6 +61,35 @@ function App() {
           );
         })}
       <p> Preço total: {totalPrice}</p>
+
+      <div className="Input">
+        <select onChange={({ target: { value } }) => setOrigin(value)}>
+          {airport &&
+            airport.map((obj) => {
+              ido++;
+              return (
+                <option value={ido}>
+                  {" "}
+                  {`${ido} = ${obj.state} - ${obj.town}`}
+                </option>
+              );
+            })}
+        </select>
+
+        <select onChange={({ target: { value } }) => setDestination(value)}>
+          {airport &&
+            airport.map((obj) => {
+              idd++;
+              return (
+                <option value={idd}>
+                  {" "}
+                  {`${idd} = ${obj.state} - ${obj.town}`}
+                </option>
+              );
+            })}
+        </select>
+      </div>
+      <button onClick={() => getFligths(origin, destination)}> Ok </button>
     </div>
   );
 }
