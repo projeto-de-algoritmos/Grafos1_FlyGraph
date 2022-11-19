@@ -1,3 +1,4 @@
+import json
 import sys
 import copy
 from unittest import result
@@ -98,6 +99,53 @@ def bfs(nodesList, source, end):
             end = parent[end]
         path.reverse()
         return path
+
+def reverseGraph(nodesList):
+    reversedGraph = []
+    reverseOrder = list(reversed(copy.copy(nodesList)))
+    mapping = {}
+    i = 0
+
+    for airport in reverseOrder:
+        mapping[airport.oaci] = i
+        reversedGraph.append(Airport(
+            oaci=airport.oaci,
+            state=airport.state,
+            operation=airport.operation,
+            latitude=airport.latitude,
+            longitude=airport.longitude,
+            altitude=airport.altitude,
+            name=airport.name,
+            town=airport.town,
+            flights=[]
+        ))
+        i += 1
+
+    for airport in reverseOrder:
+        for flight in airport.flights:
+            newFlight = copy.copy(flight)
+            newFlight.origin = copy.copy(flight.destination)
+            newFlight.destination = copy.copy(flight.origin)
+            reversedGraph[mapping[flight.destination.oaci]].flights = [newFlight] + reversedGraph[mapping[flight.destination.oaci]].flights
+
+    return(reversedGraph)
+
+def checkStrongConnectivity(nodesList, origin):
+    stronglyConnected = True
+    
+    for destination in nodesList:
+        if (origin.oaci != destination.oaci 
+            and bfs(nodesList, origin.oaci, destination.oaci) is None):
+            stronglyConnected = False
+            break
+    
+    reversedGraph = reverseGraph(nodesList)
+    for destination in nodesList:
+        if (origin.oaci != destination.oaci 
+            and bfs(reversedGraph, origin.oaci, destination.oaci) is None):
+            stronglyConnected = False
+            break
+    return stronglyConnected
 
 
 def plotGraph(nodesList):

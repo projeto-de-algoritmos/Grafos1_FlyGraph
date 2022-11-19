@@ -9,6 +9,39 @@ def clear():
 if __name__ == "__main__":
     nodesList = []
 
+    xls = ExcelFile("./djangoConfig/api/data/reverso.xlsx")
+    nodes = xls.parse(xls.sheet_names[0]).to_dict()
+    edges = xls.parse(xls.sheet_names[1]).to_dict()
+    createAirports(nodesList=nodesList, nodes=nodes)
+    createFlights(nodesList=nodesList, edges=edges)
+    # printGraph(nodesList)
+    # print('\n\n\n\n-----')
+    # printGraph(reverseGraph(nodesList))
+    # print('\n\n\n\n-----')
+    # printGraph(nodesList)
+    print(checkStrongConnectivity(nodesList, nodesList[0]))
+
+    nodesList = []
+    xls = ExcelFile("./djangoConfig/api/data/naoreverso.xlsx")
+    nodes = xls.parse(xls.sheet_names[0]).to_dict()
+    edges = xls.parse(xls.sheet_names[1]).to_dict()
+    createAirports(nodesList=nodesList, nodes=nodes)
+    createFlights(nodesList=nodesList, edges=edges)
+    # printGraph(nodesList)
+    # print('\n\n\n\n-----')
+    # printGraph(reverseGraph(nodesList))
+    # print('\n\n\n\n-----')
+    # printGraph(nodesList)
+    print(checkStrongConnectivity(nodesList, nodesList[0]))
+    exit()
+
+
+
+
+
+
+
+
     # AEROPORTOS
     xls = ExcelFile("./djangoConfig/api/data/aeroportos.xlsx")
     nodes = xls.parse(xls.sheet_names[0]).to_dict()
@@ -46,6 +79,10 @@ if __name__ == "__main__":
                     totalPrice += flight.price
                     break
     print(f"PREÇO TOTAL DA VIAGEM: R${totalPrice}")
+
+    printGraph(nodesList)
+    print('\n\n\n\n-----')
+    reverseGraph(nodesList)
 
     # plotGraph(finalPath)
     # print(finalPath)
