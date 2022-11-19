@@ -1,6 +1,7 @@
-import "./App.css";
+import "./css/App.css";
 import React, { useState, useEffect } from "react";
 import api from "./services/api";
+import BoardingPass from "./components/BoardingPass"
 
 function App() {
   const [flight, setFlights] = useState([]);
@@ -46,21 +47,7 @@ function App() {
 
   return (
     <div className="App">
-      {flight &&
-        flight.map((data) => {
-          soma();
-          return (
-            <div>
-              <p>Voo {i}</p>
-              Origem: {data.origin.town}
-              <br />
-              Destino: {data.destination.town}
-              <br />
-              Preço: {data.price}
-            </div>
-          );
-        })}
-      <p> Preço total: {totalPrice}</p>
+      <br/>
 
       <div className="Input">
         <select onChange={({ target: { value } }) => setOrigin(value)}>
@@ -89,7 +76,30 @@ function App() {
             })}
         </select>
       </div>
+
       <button onClick={() => getFligths(origin, destination)}> Ok </button>
+
+      <p> Preço total: {totalPrice}</p>
+
+      {flight &&
+        flight.map((data) => {
+          soma();
+          return (
+            <section>
+              <BoardingPass 
+                nameOrigin={data.origin.name}
+                nameDestination={data.destination.name}
+                step={i}
+                oaciOrigin={data.origin.oaci}
+                oaciDestination={data.destination.oaci}
+                stateOrigin={data.origin.state}
+                stateDestination={data.destination.state}
+                destinationOrigin={data.destination.state}
+                price={data.price}
+                seats={data.seats} />
+            </section>
+          );
+        })}
     </div>
   );
 }
