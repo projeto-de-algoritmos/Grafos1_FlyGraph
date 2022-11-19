@@ -9,39 +9,6 @@ def clear():
 if __name__ == "__main__":
     nodesList = []
 
-    xls = ExcelFile("./djangoConfig/api/data/reverso.xlsx")
-    nodes = xls.parse(xls.sheet_names[0]).to_dict()
-    edges = xls.parse(xls.sheet_names[1]).to_dict()
-    createAirports(nodesList=nodesList, nodes=nodes)
-    createFlights(nodesList=nodesList, edges=edges)
-    # printGraph(nodesList)
-    # print('\n\n\n\n-----')
-    # printGraph(reverseGraph(nodesList))
-    # print('\n\n\n\n-----')
-    # printGraph(nodesList)
-    print(checkStrongConnectivity(nodesList, nodesList[0]))
-
-    nodesList = []
-    xls = ExcelFile("./djangoConfig/api/data/naoreverso.xlsx")
-    nodes = xls.parse(xls.sheet_names[0]).to_dict()
-    edges = xls.parse(xls.sheet_names[1]).to_dict()
-    createAirports(nodesList=nodesList, nodes=nodes)
-    createFlights(nodesList=nodesList, edges=edges)
-    # printGraph(nodesList)
-    # print('\n\n\n\n-----')
-    # printGraph(reverseGraph(nodesList))
-    # print('\n\n\n\n-----')
-    # printGraph(nodesList)
-    print(checkStrongConnectivity(nodesList, nodesList[0]))
-    exit()
-
-
-
-
-
-
-
-
     # AEROPORTOS
     xls = ExcelFile("./djangoConfig/api/data/aeroportos.xlsx")
     nodes = xls.parse(xls.sheet_names[0]).to_dict()
@@ -50,7 +17,6 @@ if __name__ == "__main__":
 
     createAirports(nodesList=nodesList, nodes=nodes)
     createFlights(nodesList=nodesList, edges=edges)
-    printGraph(nodesList)
 
     clear()
     for i in range(len(nodesList)):
@@ -61,29 +27,8 @@ if __name__ == "__main__":
     destination = int(input())
 
     finalPath = bfs(nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
-    names = []
-    # if finalPath is not None:
-    #     for airport in finalPath:
-    #         names.append(airport.name)
-    # print("RESULTADO DO MENOR CAMINHO:")
-    # print("Não há caminho" if finalPath is None else names)
-
-    i = 0
-    totalPrice = 0
-    for airport in finalPath:
-        for flight in airport.flights:
-            if i != len(finalPath)-1:
-                if flight.used == True and flight.origin.oaci == finalPath[i].oaci and flight.destination.oaci == finalPath[i+1].oaci:
-                    print(f".........................................................................\nPASSO {i+1} .............. Voo DE({flight.origin.oaci} - {finalPath[i].name}) => PARA({flight.destination.oaci} - {finalPath[i+1].name}) \n.....................: {flight.seats} Assentos disponíveis | Preço: R${flight.price}\n.........................................................................\n")
-                    i += 1
-                    totalPrice += flight.price
-                    break
-    print(f"PREÇO TOTAL DA VIAGEM: R${totalPrice}")
-
-    printGraph(nodesList)
-    print('\n\n\n\n-----')
-    reverseGraph(nodesList)
-
-    # plotGraph(finalPath)
-    # print(finalPath)
-    # pprint(finalPath)
+    if finalPath is None:
+        exit()
+    printFinalPath(finalPath)
+    
+    print(f"GRAFO FORTEMENTE CONECTADO? {checkStrongConnectivity(nodesList, nodesList[0])}")

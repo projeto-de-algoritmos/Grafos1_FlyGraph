@@ -136,6 +136,7 @@ def checkStrongConnectivity(nodesList, origin):
     for destination in nodesList:
         if (origin.oaci != destination.oaci 
             and bfs(nodesList, origin.oaci, destination.oaci) is None):
+            print(f"Não há caminho entre {origin.oaci} e {destination.oaci} no grafo original.")
             stronglyConnected = False
             break
     
@@ -143,6 +144,7 @@ def checkStrongConnectivity(nodesList, origin):
     for destination in nodesList:
         if (origin.oaci != destination.oaci 
             and bfs(reversedGraph, origin.oaci, destination.oaci) is None):
+            print(f"Não há caminho entre {origin.oaci} - {origin.name} e {destination.oaci} - {destination.name} no grafo reverso.")
             stronglyConnected = False
             break
     return stronglyConnected
