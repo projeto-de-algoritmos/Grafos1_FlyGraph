@@ -21,3 +21,10 @@ def getAirports(request):
 
     response = script.returnAirport()
     return Response(response)
+
+
+@api_view(['GET'])
+def checkGraph(request):
+
+    response = script.checkGraph()
+    return Response(response)

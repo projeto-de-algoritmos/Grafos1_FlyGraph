@@ -100,6 +100,7 @@ def bfs(nodesList, source, end):
         path.reverse()
         return path
 
+
 def reverseGraph(nodesList):
     reversedGraph = []
     reverseOrder = list(reversed(copy.copy(nodesList)))
@@ -126,28 +127,33 @@ def reverseGraph(nodesList):
             newFlight = copy.copy(flight)
             newFlight.origin = copy.copy(flight.destination)
             newFlight.destination = copy.copy(flight.origin)
-            reversedGraph[mapping[flight.destination.oaci]].flights = [newFlight] + reversedGraph[mapping[flight.destination.oaci]].flights
+            reversedGraph[mapping[flight.destination.oaci]].flights = [
+                newFlight] + reversedGraph[mapping[flight.destination.oaci]].flights
 
-    return(reversedGraph)
+    return (reversedGraph)
+
 
 def checkStrongConnectivity(nodesList, origin):
     stronglyConnected = True
-    
+    result = {}
+
     for destination in nodesList:
-        if (origin.oaci != destination.oaci 
-            and bfs(nodesList, origin.oaci, destination.oaci) is None):
-            print(f"Não há caminho entre {origin.oaci} e {destination.oaci} no grafo original.")
+        if (origin.oaci != destination.oaci
+                and bfs(nodesList, origin.oaci, destination.oaci) is None):
             stronglyConnected = False
+            result = {"origin": f"{origin.oaci} - {origin.name}",
+                      "destination": f"{destination.oaci} - {destination.name}", "stronglyConnected": stronglyConnected, "Grafo": "Original"}
             break
-    
+
     reversedGraph = reverseGraph(nodesList)
     for destination in nodesList:
-        if (origin.oaci != destination.oaci 
-            and bfs(reversedGraph, origin.oaci, destination.oaci) is None):
-            print(f"Não há caminho entre {origin.oaci} - {origin.name} e {destination.oaci} - {destination.name} no grafo reverso.")
+        if (origin.oaci != destination.oaci
+                and bfs(reversedGraph, origin.oaci, destination.oaci) is None):
             stronglyConnected = False
+            result = {"origin": f"{origin.oaci} - {origin.name}",
+                      "destination": f"{destination.oaci} - {destination.name}", "stronglyConnected": stronglyConnected, "Grafo": "Reverso"}
             break
-    return stronglyConnected
+    return result
 
 
 def plotGraph(nodesList):

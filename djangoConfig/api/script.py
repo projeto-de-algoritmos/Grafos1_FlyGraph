@@ -45,3 +45,8 @@ def bfsExecute(origin, destination):
 def returnAirport():
     result = returnAirports(nodeList=nodesList)
     return result
+
+
+def checkGraph():
+    result = checkStrongConnectivity(nodesList, nodesList[0])
+    return result
