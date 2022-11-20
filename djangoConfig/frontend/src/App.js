@@ -1,13 +1,14 @@
 import "./css/App.css";
 import React, { useState, useEffect } from "react";
 import api from "./services/api";
-import BoardingPass from "./components/BoardingPass"
+import BoardingPass from "./components/BoardingPass";
 
 function App() {
   const [flight, setFlights] = useState([]);
   const [airport, setAirports] = useState([]);
   const [origin, setOrigin] = useState([]);
   const [destination, setDestination] = useState([]);
+  const [checkedGraph, setCheckedGraph] = useState([]);
 
   const [totalPrice, setTotalPrice] = useState("");
 
@@ -30,6 +31,15 @@ function App() {
     }
   };
 
+  const getCheckGraph = async () => {
+    try {
+      const _checkedGraph = await api.get("/check-graph");
+      setCheckedGraph(_checkedGraph.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   let i = 0;
   let idd = 0;
   let ido = 0;
@@ -47,7 +57,28 @@ function App() {
 
   return (
     <div className="App">
-      <br/>
+      <br />
+
+      <div className="Integridade">
+        <h2> Checar Integridade do Grafo</h2>
+        <button onClick={() => getCheckGraph()}> Ok </button>
+        {checkedGraph ? (
+          <div>
+            <p>
+              Não há caminho entre {checkedGraph.origin} e{" "}
+              {checkedGraph.destination}
+            </p>
+            <p>
+              {" "}
+              Fortemente conectado:{" "}
+              {checkedGraph.stronglyConnected ? "True" : "False"}
+            </p>
+            <p> Grafo: {checkedGraph.Grafo}</p>
+          </div>
+        ) : (
+          <h1> ahhhhhhhhhhh</h1>
+        )}
+      </div>
 
       <div className="Input">
         <select onChange={({ target: { value } }) => setOrigin(value)}>
@@ -86,7 +117,7 @@ function App() {
           soma();
           return (
             <section>
-              <BoardingPass 
+              <BoardingPass
                 nameOrigin={data.origin.name}
                 nameDestination={data.destination.name}
                 step={i}
@@ -96,7 +127,8 @@ function App() {
                 stateDestination={data.destination.state}
                 destinationOrigin={data.destination.state}
                 price={data.price}
-                seats={data.seats} />
+                seats={data.seats}
+              />
             </section>
           );
         })}

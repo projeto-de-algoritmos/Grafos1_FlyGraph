@@ -2,5 +2,8 @@
   text-align: center;
 }
 
-.Input {
+.Integridade {
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 30px;
 }
