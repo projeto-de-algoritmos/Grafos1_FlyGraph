@@ -1,45 +1,26 @@
-**!! Atenção: Renomeie o seu repositório para (Tema)_(NomeDoProjeto). !!** 
-
-Temas:
- - Grafos1
- - Grafos2
- - PD
- - D&C
- - Greed
- - Final 
- 
- **!! *Não coloque os nomes dos alunos no título do repositório*. Exemplo de título correto: Grafos2_Labirinto-do-Minotauro !!**
- 
- (Apague essa seção)
-
 # NomedoProjeto
 
-**Número da Lista**: X<br>
-**Conteúdo da Disciplina**: XXXXXXXXXX<br>
+**Número da Lista**: 3<br>
+**Conteúdo da Disciplina**: Grafos 1<br>
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 19/0089792  |  João Victor Correia de Oliveira |
+| 19/0020601  |  Victor Buendia Cruz de Alvim |
 
 ## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
+O _Nome do Projeto_ tem como objetivo verificar a integridade de uma base de dados real de voos da ANAC utizando o conceito de grafos e encontrar o menor caminho entre dois aeroportos brasileiros. Convertendo os dados de uma planilha(.csv) pública para um grafo direcionado foi utilizado o algoritmo de reversão para checar a conectividade do grafo, caso ele não seja fortemente conectado existe um aeroporto inalcançável que será exibido. Para encontrar o menor caminho entre dois destinos foi aplicado o algoritmo de busca em largura(BFS). 
 
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
 
 ## Instalação 
-**Linguagem**: xxxxxx<br>
-**Framework**: (caso exista)<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
+**Linguagem**: Python(Back-end) e JavaScript(Front-End) <br>
+**Framework**: Django Rest e React <br>
+
 
 ```
-pip3 install -r requirements.txt
-cd djangoConfig
-python3 manage.py runserver
-----
-
 sudo docker-compose up --build
 ```
 
