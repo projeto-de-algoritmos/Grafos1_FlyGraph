@@ -135,7 +135,8 @@ def reverseGraph(nodesList):
 
 def checkStrongConnectivity(nodesList, origin):
     stronglyConnected = True
-    result = {}
+    result = {"origin": "",
+              "destination": "", "stronglyConnected": True, "Grafo": ""}
 
     for destination in nodesList:
         if (origin.oaci != destination.oaci
