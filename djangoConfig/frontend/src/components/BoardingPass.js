@@ -17,6 +17,7 @@ function BoardingPass(props) {
           <div class="dep-arr-label">({props.stateOrigin || "STATE"})</div>
           <div class="time">Embarque</div>
         </div>
+        <div class="plane-icon"></div>
         <div class="airport">
           <div class="airport-name">
             {props.nameDestination || "Destination"}
@@ -36,7 +37,13 @@ function BoardingPass(props) {
           <div class="place-value">{props.seats || 0} Assento(s)</div>
         </div>
         <div class="qr">
-          <img src="http://www.classtools.net/QR/pics/qr.png" />
+          <img src={props.img} />
+        </div>
+      </section>
+      <section class="end">
+      <div class="place-block">
+          <div class="place-label">AEROPORTO DE EMBARQUE</div>
+          <div class="place-value">Escaneie para ver o aeroporto.</div>
         </div>
       </section>
     </div>
