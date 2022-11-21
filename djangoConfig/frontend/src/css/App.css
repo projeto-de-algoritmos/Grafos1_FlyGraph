@@ -9,3 +9,16 @@
   padding-top: 20px;
   background: rgb(0, 0, 0);
 }
+
+.preco {
+  margin-top: 1rem;
+}
+
+.semCaminho {
+  margin-top: 1.5rem;
+  font-size: large;
+}
+
+.align-select {
+  text-align: start;
+}

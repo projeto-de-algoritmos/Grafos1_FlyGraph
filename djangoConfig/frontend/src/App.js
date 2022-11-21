@@ -1,11 +1,11 @@
 import "./css/App.css";
-import "./css/boardingpass.css"
-import "./css/dropdown.css"
-import "./css/index.css"
+import "./css/boardingpass.css";
+import "./css/dropdown.css";
+import "./css/index.css";
 import React, { useState, useEffect } from "react";
 import api from "./services/api";
 import BoardingPass from "./components/BoardingPass";
-require('bootstrap');
+require("bootstrap");
 
 function App() {
   const [flight, setFlights] = useState([]);
@@ -13,7 +13,8 @@ function App() {
   const [origin, setOrigin] = useState([]);
   const [destination, setDestination] = useState([]);
   const [checkedGraph, setCheckedGraph] = useState([]);
-
+  const [consumed, setConsumed] = useState(false);
+  const [noPath, setNoPath] = useState(false);
   const [totalPrice, setTotalPrice] = useState("");
 
   const getFligths = async (ido, idd) => {
@@ -21,8 +22,9 @@ function App() {
       const _flight = await api.get(`get-data/?ido=${ido}&idd=${idd}`);
       setFlights(_flight.data.flights);
       setTotalPrice(_flight.data.total_price);
+      setNoPath(false);
     } catch (error) {
-      console.log(error.message);
+      setNoPath(true);
     }
   };
 
@@ -39,6 +41,7 @@ function App() {
     try {
       const _checkedGraph = await api.get("/check-graph");
       setCheckedGraph(_checkedGraph.data);
+      setConsumed(true);
     } catch (error) {
       console.log(error.message);
     }
@@ -52,10 +55,6 @@ function App() {
   }
 
   useEffect(() => {
-    getFligths(origin, destination);
-  }, []);
-
-  useEffect(() => {
     getAirports();
   }, []);
 
@@ -64,28 +63,60 @@ function App() {
       <br />
 
       <div className="Integridade">
-        <h2 class="white"> CHECAR INTEGRIDADE DO GRAFO</h2>
-        <button type="button" class="btn btn-outline-info" onClick={() => getCheckGraph()}> CHECAR</button>
-        {checkedGraph ? (
-          <div class="white">
-            <p>
-              Não há caminho entre {checkedGraph.origin} e{" "}
-              {checkedGraph.destination}
-            </p>
-            <p>
+        <h2 class="white"> Checar integridade do Grafo</h2>
+        <button
+          type="button"
+          class="btn btn-outline-info"
+          onClick={() => getCheckGraph()}
+        >
+          {" "}
+          CHECAR
+        </button>
+        {consumed ? (
+          checkedGraph.stronglyConnected ? (
+            <p style={{ color: "#ffffff" }}>
               {" "}
               Fortemente conectado:{" "}
-              {checkedGraph.stronglyConnected ? "True" : "False"}
+              <span style={{ color: "#17a2b8" }}> Sim </span>{" "}
             </p>
-            <p> Grafo: {checkedGraph.Grafo}</p>
-          </div>
-        ) : (
-          <h1> ahhhhhhhhhhh</h1>
-        )}
+          ) : (
+            <div class="white">
+              <p>
+                Não há caminho entre{" "}
+                <span style={{ color: "#17a2b8" }}>
+                  {" "}
+                  {checkedGraph.origin}{" "}
+                </span>{" "}
+                e{" "}
+                <span style={{ color: "#17a2b8" }}>
+                  {" "}
+                  {checkedGraph.destination}{" "}
+                </span>
+              </p>
+              <p>
+                {" "}
+                Fortemente conectado:{" "}
+                <span style={{ color: "#17a2b8" }}> Não </span>
+              </p>
+              <p>
+                {" "}
+                Grafo:{" "}
+                <span style={{ color: "#17a2b8" }}>
+                  {" "}
+                  {checkedGraph.Grafo}{" "}
+                </span>{" "}
+              </p>
+            </div>
+          )
+        ) : null}
       </div>
 
       <div className="Input">
-        <select class="custom-select" aria-label="origem" onChange={({ target: { value } }) => setOrigin(value)}>
+        <select
+          class="align-select custom-select"
+          aria-label="origem"
+          onChange={({ target: { value } }) => setOrigin(value)}
+        >
           <option selected>SELECIONE A ORIGEM</option>
           {airport &&
             airport.map((obj) => {
@@ -93,36 +124,57 @@ function App() {
               return (
                 <option value={ido}>
                   {" "}
-                  {`${ido} = ${obj.state} - ${obj.town}`}
+                  {`${ido} - ${obj.state} - ${obj.name}`}
                 </option>
               );
             })}
         </select>
 
-        <select class="custom-select" onChange={({ target: { value } }) => setDestination(value)}>
-        <option selected>SELECIONE O DESTINO</option>
+        <select
+          class="align-select custom-select"
+          onChange={({ target: { value } }) => setDestination(value)}
+        >
+          <option selected>SELECIONE O DESTINO</option>
           {airport &&
             airport.map((obj) => {
               idd++;
               return (
                 <option value={idd}>
                   {" "}
-                  {`${idd} = ${obj.state} - ${obj.town}`}
+                  {`${idd} - ${obj.state} - ${obj.name}`}
                 </option>
               );
             })}
         </select>
       </div>
 
-      <button type="button" class="btn btn-outline-success" onClick={() => getFligths(origin, destination)}> VER MENOR ROTA VOANDO </button>
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        onClick={() => getFligths(origin, destination)}
+      >
+        {" "}
+        VER MENOR ROTA VOANDO{" "}
+      </button>
 
-      <p> PREÇO TOTAL DA VIAGEM: R${Math.round(totalPrice)}</p>
-
-      {flight &&
+      {noPath ? (
+        <p className="semCaminho"> Não existe caminho possível </p>
+      ) : (
+        flight &&
         flight.map((data) => {
           soma();
           return (
             <section>
+              {i !== 1 ? null : (
+                <p className="preco">
+                  <span>
+                    {" "}
+                    PREÇO TOTAL DA VIAGEM: R$ {Number(totalPrice).toFixed(
+                      2
+                    )}{" "}
+                  </span>
+                </p>
+              )}
               <BoardingPass
                 nameOrigin={data.origin.name}
                 nameDestination={data.destination.name}
@@ -134,11 +186,15 @@ function App() {
                 destinationOrigin={data.destination.state}
                 price={data.price}
                 seats={data.seats}
-                img={"https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=https://pt.wikipedia.org/wiki/Special:Search?search=aeroporto+"+data.origin.name.toLowerCase()}
+                img={
+                  "https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=https://pt.wikipedia.org/wiki/Special:Search?search=aeroporto+" +
+                  data.origin.name.toLowerCase()
+                }
               />
             </section>
           );
-        })}
+        })
+      )}
     </div>
   );
 }
