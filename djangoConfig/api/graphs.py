@@ -1,7 +1,5 @@
-import json
 import sys
 import copy
-from unittest import result
 import networkx as nx
 from queue import Queue
 from .models.flight import Flight
@@ -151,8 +149,8 @@ def checkStrongConnectivity(nodesList, origin):
         if (origin.oaci != destination.oaci
                 and bfs(reversedGraph, origin.oaci, destination.oaci) is None):
             stronglyConnected = False
-            result = {"origin": f"{origin.oaci} - {origin.name}",
-                      "destination": f"{destination.oaci} - {destination.name}", "stronglyConnected": stronglyConnected, "Grafo": "Reverso"}
+            result = {"destination": f"{origin.oaci} - {origin.name}",
+                      "origin": f"{destination.oaci} - {destination.name}", "stronglyConnected": stronglyConnected, "Grafo": "Reverso"}
             break
     return result
 
