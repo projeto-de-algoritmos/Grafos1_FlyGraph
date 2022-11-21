@@ -38,6 +38,9 @@ Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 pip3 install -r requirements.txt
 cd djangoConfig
 python3 manage.py runserver
+----
+
+sudo docker-compose up --build
 ```
 
 ## Uso 

@@ -1,7 +1,11 @@
 import "./css/App.css";
+import "./css/boardingpass.css"
+import "./css/dropdown.css"
+import "./css/index.css"
 import React, { useState, useEffect } from "react";
 import api from "./services/api";
 import BoardingPass from "./components/BoardingPass";
+require('bootstrap');
 
 function App() {
   const [flight, setFlights] = useState([]);
@@ -60,10 +64,10 @@ function App() {
       <br />
 
       <div className="Integridade">
-        <h2> Checar Integridade do Grafo</h2>
-        <button onClick={() => getCheckGraph()}> Ok </button>
+        <h2 class="white"> CHECAR INTEGRIDADE DO GRAFO</h2>
+        <button type="button" class="btn btn-outline-info" onClick={() => getCheckGraph()}> CHECAR</button>
         {checkedGraph ? (
-          <div>
+          <div class="white">
             <p>
               Não há caminho entre {checkedGraph.origin} e{" "}
               {checkedGraph.destination}
@@ -81,7 +85,8 @@ function App() {
       </div>
 
       <div className="Input">
-        <select onChange={({ target: { value } }) => setOrigin(value)}>
+        <select class="custom-select" aria-label="origem" onChange={({ target: { value } }) => setOrigin(value)}>
+          <option selected>SELECIONE A ORIGEM</option>
           {airport &&
             airport.map((obj) => {
               ido++;
@@ -94,7 +99,8 @@ function App() {
             })}
         </select>
 
-        <select onChange={({ target: { value } }) => setDestination(value)}>
+        <select class="custom-select" onChange={({ target: { value } }) => setDestination(value)}>
+        <option selected>SELECIONE O DESTINO</option>
           {airport &&
             airport.map((obj) => {
               idd++;
@@ -108,9 +114,9 @@ function App() {
         </select>
       </div>
 
-      <button onClick={() => getFligths(origin, destination)}> Ok </button>
+      <button type="button" class="btn btn-outline-success" onClick={() => getFligths(origin, destination)}> VER MENOR ROTA VOANDO </button>
 
-      <p> Preço total: {totalPrice}</p>
+      <p> PREÇO TOTAL DA VIAGEM: R${Math.round(totalPrice)}</p>
 
       {flight &&
         flight.map((data) => {
@@ -128,6 +134,7 @@ function App() {
                 destinationOrigin={data.destination.state}
                 price={data.price}
                 seats={data.seats}
+                img={"https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=https://pt.wikipedia.org/wiki/Special:Search?search=aeroporto+"+data.origin.name.toLowerCase()}
               />
             </section>
           );
