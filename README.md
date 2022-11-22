@@ -25,7 +25,11 @@ sudo docker-compose up --build
 ```
 
 ## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+Após executar o comando de build do docker, basta acessar a url: http://localhost:3000/
+Caso seja necessário subir novamente o container:
+```
+sudo docker-compose up 
+```
 
 ## Outros 
 Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
