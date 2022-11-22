@@ -17,7 +17,7 @@ function App() {
   const [noPath, setNoPath] = useState(false);
   const [totalPrice, setTotalPrice] = useState("");
 
-  const getFligths = async (ido, idd) => {
+  const getFlights = async (ido, idd) => {
     try {
       const _flight = await api.get(`get-data/?ido=${ido}&idd=${idd}`);
       setFlights(_flight.data.flights);
@@ -46,6 +46,21 @@ function App() {
       console.log(error.message);
     }
   };
+
+  const plotGraph = async () => {
+      await api.get(`plot/`);
+  }
+
+  const plotPath = async (ido, idd) => {
+    try{
+      await api.get(`plot-path/?ido=${ido}&idd=${idd}`)
+    }
+    catch(error){
+      console.log(error.message);
+      if(ido === idd)
+        alert('Você não pode usar um aeroporto de destino igual ao de origem.')
+    }
+  }
 
   let i = 0;
   let idd = 0;
@@ -148,10 +163,30 @@ function App() {
         </select>
       </div>
 
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          onClick={() => plotGraph()}
+        >
+          {" "}
+          PLOTAR GRAFO COMPLETO{" "}
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          onClick={() => plotPath(origin, destination)}
+        >
+          {" "}
+          PLOTAR ÁRVORE RESPOSTA{" "}
+        </button>
+      </div>
+
       <button
         type="button"
         class="btn btn-outline-success"
-        onClick={() => getFligths(origin, destination)}
+        onClick={() => getFlights(origin, destination)}
       >
         {" "}
         VER MENOR ROTA VOANDO{" "}

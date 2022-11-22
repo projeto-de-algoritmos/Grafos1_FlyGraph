@@ -41,6 +41,13 @@ def bfsExecute(origin, destination):
 
     return result
 
+def bfsPlot(origin, destination):
+
+    finalPath = bfs(
+        nodesList, nodesList[origin-1].oaci, nodesList[destination-1].oaci)
+
+    return finalPath
+
 
 def returnAirport():
     result = returnAirports(nodeList=nodesList)
@@ -50,3 +57,9 @@ def returnAirport():
 def checkGraph():
     result = checkStrongConnectivity(nodesList, nodesList[0])
     return result
+
+def plot():
+    plotGraph(nodesList=nodesList)
+
+def pathPlot(finalPath):
+    plotGraph(nodesList=finalPath)

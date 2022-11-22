@@ -156,10 +156,11 @@ def checkStrongConnectivity(nodesList, origin):
 
 
 def plotGraph(nodesList):
+    plt.close('all')
     G = nx.Graph()
     G.add_node(node.oaci for node in nodesList)
     for node in nodesList:
         for edge in node.flights:
-            G.add_edge(edge.origin, edge.destination)
+            G.add_edge(edge.origin.oaci, edge.destination.oaci)
     nx.draw_networkx(G)
     plt.show()

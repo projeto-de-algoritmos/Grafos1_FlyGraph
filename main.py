@@ -32,3 +32,5 @@ if __name__ == "__main__":
     printFinalPath(finalPath)
     
     print(f"GRAFO FORTEMENTE CONECTADO? {checkStrongConnectivity(nodesList, nodesList[0])}")
+
+    plotGraph(finalPath)
