@@ -15,16 +15,31 @@ O FlyGraph é uma aplicação web que tem como objetivo verificar a integridade 
 A base de dados coletada foi retirada do [Site de Dados Abertos da ANAC (Agência Nacional de Aviação Civil)](https://www.anac.gov.br/acesso-a-informacao/dados-abertos) para os aeroportos e os voos. Inicialmente coletamos [550 aeroportos](https://sistemas.anac.gov.br/dadosabertos/Voos%20e%20opera%C3%A7%C3%B5es%20a%C3%A9reas/Registro%20de%20servi%C3%A7os%20a%C3%A9reos/2022/11%20-%20Novembro/) e [57 mil voos](https://sistemas.anac.gov.br/sas/tarifadomestica/2022/). A partir disso, utilizamos o [Google Big Query](https://cloud.google.com/bigquery) para, em SQL, limpar a base de aeroportos e voos garantindo que não houvesse voos sem aeroporto e aeroportos sem voo. 
 
 
-Convertendo os dados de uma planilha (.xlxs) pública para um grafo direcionado, utilizamos o algoritmo de reversão de grafo para checar a conectividade do grafo. Caso ele não seja fortemente conectado, significa que não é possível alcançar todos os outros aeroportos a partir de um aeroporto origem (escolhido arbitrariamente) no grafo original ou no grafo reverso. Para encontrar o menor caminho entre dois destinos foi aplicado o algoritmo de busca em largura (BFS). 
+Convertendo os dados de uma planilha (.xlxs) pública para um grafo direcionado, utilizamos o algoritmo de reversão de grafo para checar a conectividade do grafo. Caso ele não seja fortemente conectado, significa que não é possível alcançar todos os outros aeroportos a partir de um aeroporto origem (escolhido arbitrariamente) no grafo original ou no grafo reverso. Para encontrar o menor caminho entre dois destinos foi aplicado o algoritmo de busca em largura (BFS).
+
+*Easter Egg (:rabbit:): Escaneie os QR Codes das passagens.*
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+### Encontrando menor caminho entre dois aeroportos
+![Menor caminho entre aeroportos](img/aeroportos.png)
+
+### Checando integridade do grafo
+![Integridade do grafo](img/integridade.png)
+
+### Grafo Plotado
+#### Grafo Completo
+![Grafo completo plotado](img/grafocompleto.png)
+
+#### Grafo de uma (das possíveis) árvore de resposta do BFS
+![Grafo resposta caminho](img/grafocaminho.png)
 
 ## Instalação 
 **Linguagem**: Python(Back-end) e JavaScript(Front-End) <br>
 **Framework**: Django Rest e React <br>
 
 #### Opção 1- Utilizando Docker
+
+**:alert: Para usar os botões de PLOTAR GRAFO, é preciso rodar a Opção 2- Para desenvolvimento. Isso é preciso para rodar a biblioteca matplotlib.pyplot na sua máquina.**
 ```
 sudo docker-compose up --build
 ```
