@@ -21,17 +21,20 @@ Convertendo os dados de uma planilha (.xlxs) pública para um grafo direcionado,
 
 ## Screenshots
 ### Encontrando menor caminho entre dois aeroportos
-![Menor caminho entre aeroportos](img/aeroportos.png)
+![Menor caminho entre aeroportos](/assets/img/aeroportos.png)
 
 ### Checando integridade do grafo
-![Integridade do grafo](img/integridade.png)
+![Integridade do grafo](/assets/img/integridade.png)
 
 ### Grafo Plotado
 #### Grafo Completo
-![Grafo completo plotado](img/grafocompleto.png)
+![Grafo completo plotado](/assets/img/grafocompleto.png)
 
 #### Grafo de uma (das possíveis) árvore de resposta do BFS
-![Grafo resposta caminho](img/grafocaminho.png)
+![Grafo resposta caminho](/assets/img/grafocaminho.png)
+
+## Vídeo de Apresentação
+
 
 ## Instalação 
 **Linguagem**: Python(Back-end) e JavaScript(Front-End) <br>
@@ -39,7 +42,7 @@ Convertendo os dados de uma planilha (.xlxs) pública para um grafo direcionado,
 
 #### Opção 1- Utilizando Docker
 
-**:alert: Para usar os botões de PLOTAR GRAFO, é preciso rodar a Opção 2- Para desenvolvimento. Isso é preciso para rodar a biblioteca matplotlib.pyplot na sua máquina.**
+**:warning: Para usar os botões de PLOTAR GRAFO, é preciso rodar a Opção 2- Para desenvolvimento. Isso é preciso para rodar a biblioteca matplotlib.pyplot na sua máquina.**
 ```
 sudo docker-compose up --build
 ```
