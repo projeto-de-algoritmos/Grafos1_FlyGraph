@@ -182,6 +182,8 @@ function App() {
           PLOTAR ÁRVORE RESPOSTA{" "}
         </button>
       </div>
+      <p style={{ color: "#b8b8b8" }}>(Não rodar no Docker para usar a biblioteca matplotlib.pyplot)</p>
+
 
       <button
         type="button"

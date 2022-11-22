@@ -31,6 +31,7 @@ def checkGraph(request):
 def plot(request):
 
     script.plot()
+    return Response()
 
 @api_view(['GET'])
 def plotPath(request):
@@ -40,3 +41,4 @@ def plotPath(request):
     response = script.bfsPlot(origin, destination)
 
     script.pathPlot(response)
+    return Response()
