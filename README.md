@@ -19,17 +19,38 @@ Adicione 3 ou mais screenshots do projeto em funcionamento.
 **Linguagem**: Python(Back-end) e JavaScript(Front-End) <br>
 **Framework**: Django Rest e React <br>
 
-
+#### Opção 1- Utilizando Docker
 ```
 sudo docker-compose up --build
 ```
+#### Opção 2- Para desenvolvimento 
+```
+cd djangoConfig/
+pip install requirements.txt
+```
+ 
+Como desenvolvimento é necessário entrar no arquivo frontend/services/api.js e alterar a URL de requisições para a porta do Django: 
+```
+  baseURL: 'http://127.0.0.1:8000/'
+```
+```
+cd frontend/
+sudo npm i
+npm run build
+
+cd .. 
+
+python3 manage.py runserver
+```
 
 ## Uso 
-Após executar o comando de build do docker, basta acessar a url: http://localhost:3000/
+Opção 1 - Após executar o comando de build do docker, basta acessar a url: http://localhost:3000/
 Caso seja necessário subir novamente o container:
 ```
 sudo docker-compose up 
 ```
+
+Opção 2 - Após instalar as dependências e rodar o server python, basta acessar a url: http://127.0.0.1:8000/
 
 ## Outros 
 Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
